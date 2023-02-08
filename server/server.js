@@ -58,23 +58,27 @@ app.delete("/logout",
     return res.sendStatus(200);
   });
 
-// Route to save favorite food to user's favorite folder
-app.patch('/user/addfav/:username', userController.addFavorite, (req, res) => {
-  res.status(200).json(res.locals.favorite);
-});
-
-// Route to get a collection of favorite food for a user
-app.get('/user/:username', userController.getFavorite, (req, res) => {
-  res.status(200).json(res.locals.favorite);
-});
-
-// Route to delete a favorite food from a user's favorite collection
-app.patch(
-  '/user/deletefav/:username',
-  userController.deleteFavorite,
+// Route to fetch user preferences
+app.get('/preferences/:username', 
+  userController.updatePreferences, 
   (req, res) => {
     res.status(200).json(res.locals.favorite);
   });
+
+// Route to update user preferences
+app.patch('/preferences/:username', 
+  userController.updatePreferences, // update to controller name
+  (req, res) => { 
+    res.status(200).json(res.locals.preferences); // update to correct res.locals storage
+  });
+
+// REMOVE?
+// // Route to delete a favorite food from a user's favorite collection
+// app.patch('/user/deletefav/:username',
+//   userController.deleteFavorite,
+//   (req, res) => {
+//     res.status(200).json(res.locals.favorite);
+//   });
 
 // Catch all route
 app.use('/', (req, res) => {
