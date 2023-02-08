@@ -1,5 +1,5 @@
 @import '_variables';
-
+@import '_mixins';
 //dropdown
 
 .dropdown-container {
@@ -37,25 +37,82 @@
       padding: 1.5rem;
       border-radius: 1rem;
     }
+    // select {
+    //   appearance: none;
+    //   text-align: center;
+    //   margin: 2rem;
+    //   font-size: 4rem;
+    //   padding: 1rem;
+    //   min-width: 25rem;
+    //   background-color: white;
+    //   border-radius: 0.5rem;
+    // }
+    // select::-ms-expand {
+    //   display: none;
+    // }
+    // option {
+    //   font-size: 4rem;
+    //   text-align: center;
+    // }
+
     select {
-      appearance: none;
-      text-align: center;
-      margin: 2rem;
-      font-size: 4rem;
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      background-color: lighten($primarySalmon, 10);
+      background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='3rem' viewBox='0 0 24 24' width='3rem' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position-x: 100%;
+      background-position-y: 50%;
+      color: $select-color;
+      width: auto;
+      height: auto;
+      font-size: 5rem;
       padding: 1rem;
-      min-width: 25rem;
-      background-color: white;
+      // border: none;
       border-radius: 0.5rem;
-    }
-    select::-ms-expand {
-      display: none;
-    }
-    option {
-      font-size: 4rem;
-      text-align: center;
+      margin: 1rem;
+      // text-align-last: center;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      // direction: ltr;
+      @include transition(all 0.2s ease-in);
+      &:focus > option:checked {
+        background: $select-background !important;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+      &:hover {
+        background-color: darken($select-background, 2);
+      }
+      option {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: darken($primarySalmon, 5);
+        // border: none;
+        padding-right: 3rem;
+
+        // text-align: center;
+        @include transition(all 0.15s ease-in);
+        &:hover,
+        &.is-selected {
+          color: $select-background;
+          background: $select-color;
+        }
+        &[rel='hide'] {
+          display: none;
+        }
+      }
     }
   }
 }
+
+// select option:checked,
+// select option:hover {
+//   box-shadow: 0 0 10px 100px #000 inset;
+// }
 
 // .dropdown label {
 //   padding: 20px;

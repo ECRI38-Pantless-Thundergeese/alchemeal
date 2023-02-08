@@ -71,5 +71,14 @@
     padding: 1.5rem;
     margin-bottom: 2rem;
     border-radius: 1rem;
+    background-color: $primarySalmon;
+    color: white;
+    &:hover {
+      background-color: darken($primarySalmon, 10);
+    }
+  }
+  span {
+    color: red;
+    font-size: 3rem;
   }
 }

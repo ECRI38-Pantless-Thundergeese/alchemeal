@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '../components/Table';
 import DropDown from '../components/DropDown';
+import Cardlist from '../components/Cardlist';
+
 
 function FeatureContainer(props) {
   // const tableProperties = ['Insert', 'food', 'properties'];
@@ -43,7 +45,7 @@ function FeatureContainer(props) {
   const handleLogout = () => {
     props.setGlobalUser('');
     navigate('/');
-  }
+  };
 
   const handleClick = () => {
     console.log('ailment', ailment);
@@ -72,15 +74,24 @@ function FeatureContainer(props) {
       .catch((err) => console.log(err));
   };
 
+  // Jackson added this function
+  const handleProfile = () => {
+    console.log(props.globalUser);
+    navigate(`/profile/${props.globalUser}`);
+  };
+
   return (
     <>
       <nav>
-        <h1>Food Remedy</h1>
-        <div className="logoutContainer">
+        <h1>AlcheMeal</h1>
+        <div className='logoutContainer'>
           <p>{props.globalUser}</p>
-          <button 
-            onClick={handleLogout}
-            className="logout">Logout</button>
+          <button onClick={handleProfile} className='logout'>
+            Edit Profile
+          </button>
+          <button onClick={handleLogout} className='logout'>
+            Logout
+          </button>
         </div>
       </nav>
 
@@ -90,6 +101,11 @@ function FeatureContainer(props) {
         ailment={ailment}
       />
       <Table
+        columns={tableHeaders}
+        rows={foodEntries}
+        dataProperties={tableProperties}
+      />
+      <Cardlist
         columns={tableHeaders}
         rows={foodEntries}
         dataProperties={tableProperties}

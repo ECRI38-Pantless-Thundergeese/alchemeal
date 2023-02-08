@@ -6,6 +6,8 @@ function Login(props) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState(false);
+  const [signUpError, setSignUpError] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -14,7 +16,9 @@ function Login(props) {
     if (event.target.id === 'password') setPassword(event.target.value);
   };
 
-  const handleSignup = () => {
+  const handleSignup = (e) => {
+    setLoginError(false);
+    e.preventDefault();
     fetch('http://localhost:3000/signup', {
       method: 'POST',
       body: JSON.stringify({
@@ -24,14 +28,26 @@ function Login(props) {
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error! status: ${res.status}`);
+        }
+        res.json();
+      })
       .then((data) => {
         console.log('user created:', data);
+        setSignUpError(false);
+        navigate('/signup')
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSignUpError(true);
+        console.log(err);
+      });
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    setSignUpError(false);
+    e.preventDefault();
     fetch('http://localhost:3000/login', {
       method: 'POST',
       body: JSON.stringify({
@@ -51,8 +67,12 @@ function Login(props) {
         console.log('username', data);
         setGlobalUser(data);
         navigate('/feature');
+        setLoginError(false);
       })
-      .catch((err) => console.log('login error:', err));
+      .catch((err) => {
+        setLoginError(true);
+        console.log('login error:', err);
+      });
   };
 
   function handleSubmit(e) {
@@ -71,14 +91,14 @@ function Login(props) {
         <input id="username" type="text" onChange={handleChange} placeholder="Enter Username" name="username" required />
       </label>
 
-        <label htmlFor="password">
+        <label htmlFor='password'>
           <b>Password</b>
           <input
-            id="password"
-            type="text"
+            id='password'
+            type='text'
             onChange={handleChange}
-            placeholder="Enter Password"
-            name="password"
+            placeholder='Enter Password'
+            name='password'
             required
           />
         </label>
