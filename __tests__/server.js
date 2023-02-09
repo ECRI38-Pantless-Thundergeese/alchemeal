@@ -291,6 +291,5 @@ describe('Server Route Testing', () => {
   });
 });
 
-// cookie tests
-// update fav tests
-// db tests
+// Cookie Tests
+// Controller Functionality Tests
