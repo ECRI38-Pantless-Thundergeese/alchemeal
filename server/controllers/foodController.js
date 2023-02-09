@@ -39,7 +39,7 @@ foodController.getFacts = async (req, res, next) => {
     );
     res.locals.facts = facts;
 
-    console.log(facts)
+    console.log(facts);
     // console.log('length', res.locals.facts.length);
     return next();
   } catch (error) {
@@ -63,13 +63,20 @@ foodController.filterAllergy = async (req, res, next) => {
   if (user.allergy.length > 0) {
     for (let i = 0; i < facts.length; i++) {
       let labels = facts[i].healthLabels;
-      user.allergy.forEach((allergy) => {
-        if (labels.includes(allergy.value.toUpperCase() + '_FREE')) {
-          goodFood.add(foods[i]);
-          goodFacts.add(facts[i]);
+      let include = true;
+      for (const allergen of user.allergy) {
+        if (!labels.includes(allergen.value.toUpperCase() + '_FREE')) {
+          include = false;
+          break;
         }
-      });
+      }
+      if (include) {
+        goodFood.add(foods[i]);
+        goodFacts.add(facts[i]);
+      }
     }
+    console.log(goodFood);
+
     res.locals.foods = Array.from(goodFood);
     res.locals.facts = Array.from(goodFacts);
   }
@@ -88,12 +95,17 @@ foodController.filterDiet = async (req, res, next) => {
   if (diets.length > 0) {
     for (let i = 0; i < facts.length; i++) {
       let labels = facts[i].healthLabels;
-      diets.forEach((diet) => {
-        if (labels.includes(diet.value.toUpperCase())) {
-          goodFood.add(foods[i]);
-          goodFacts.add(facts[i]);
+      let include = true;
+      for (const d of diets) {
+        if (!labels.includes(d.value.toUpperCase())) {
+          include = false;
+          break;
         }
-      });
+      }
+      if (include) {
+        goodFood.add(foods[i]);
+        goodFacts.add(facts[i]);
+      }
     }
     res.locals.foods = Array.from(goodFood);
     res.locals.facts = Array.from(goodFacts);

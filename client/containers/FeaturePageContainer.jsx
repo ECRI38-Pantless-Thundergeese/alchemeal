@@ -59,7 +59,7 @@ function FeatureContainer(props) {
     // console.log('ailment', ailment);
     const logo = document.querySelector('.logo');
     logo.classList.toggle('flip');
-    fetch('/search', {
+    fetch('/search/' + globalUser, {
       method: 'POST',
       body: JSON.stringify({ ailment }),
       headers: { 'Content-Type': 'application/json' },
