@@ -80,7 +80,6 @@ function FeatureContainer(props) {
         });
         // console.log('parsedData', parsedData);
         setFoodEntries(parsedData);
-        git;
       })
       .catch((err) => console.log(err));
   };
