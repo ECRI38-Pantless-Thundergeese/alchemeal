@@ -44,6 +44,9 @@
     justify-items: start;
     font-size: 4rem;
     max-width: 60rem;
+    required::after {
+      content: ' - required';
+    }
   }
   h1 {
     font-size: 9rem;

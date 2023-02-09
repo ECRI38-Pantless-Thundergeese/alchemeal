@@ -1,40 +1,22 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from 'react-router-dom';
+import React from 'react';
 import FeatureContainer from '../containers/FeaturePageContainer';
 import Login from './Login';
+import Profile from './Profile';
+import Signup from './Signup';
+import { useSelector } from 'react-redux';
 
-function App() {
-  const [globalUser, setGlobalUser] = useState('');
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path='/'
-          exact
-          element={
-            <Login setGlobalUser={setGlobalUser} globalUser={globalUser} />
-          }
-        />
-        <Route
-          path='/feature'
-          exact
-          element={
-            globalUser ? (
-              <FeatureContainer
-                globalUser={globalUser}
-                setGlobalUser={setGlobalUser}
-              />
-            ) : null
-          }
-        />
-      </Routes>
-    </Router>
-  );
+function App(props) {
+  const appPage = useSelector((state) => state.control.appPage);
+  switch (appPage) {
+    case '/signup':
+      return <Signup appPage={appPage} />;
+    case '/profile':
+      return <Profile appPage={appPage} />;
+    case '/feature':
+      return <FeatureContainer appPage={appPage} />;
+    default: //'/':
+      return <Login appPage={appPage} />;
+  }
 }
 
 export default App;

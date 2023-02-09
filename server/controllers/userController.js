@@ -100,32 +100,74 @@ userController.verifyUser = async (req, res, next) => {
     });
   }
 };
-// jackson added this code
+
+// Retrieves a full user profile and returns it
 userController.getProfile = async (req, res, next) => {
   const { username } = req.params;
-  const { firstName, lastName, allergy, diet } = req.body;
-  try {
-    const user = await User.find({ username });
-    console.log(user);
-    if (!user[0]) {
-      console.log('no user found');
-      throw new Error('no user found');
-    }
-    const matched = await bcrypt.compare(password, user[0].password);
-    if (!matched) {
-      throw new Error('password incorrect');
-    }
-    res.locals.username = username;
+      try {
+        const profile = await User.findOne({ username });
+        if (!profile) {
+          throw Error('user not found');
+        }
+        const { firstname, lastname, allergy, diet, favorite, blacklist } = profile
+
+    res.locals.profile = { firstname, lastname, allergy, diet, favorite, blacklist };
     return next();
-  } catch (error) {
-    return next({
-      log: 'Error in userController.verifyUser middleware function',
-      status: 500,
-      message: { err: error.message },
-    });
-  }
+    } 
+    catch (error) {
+      return next({
+        log: 'Error in userController.getProfile middleware function',
+        status: 500,
+        message: { err: error.message },
+      });
+    }
+}
+
+// Overwrites current profile preferences with new selections
+userController.updateProfile = async (req, res, next) => {
+    const { username } = req.params;
+      try {
+        const user = await User.findOneAndUpdate({ username }, req.body, { new: true });
+        if (!user) {
+          throw Error('user not found');
+        }
+    res.locals.profile = user;
+    return next();
+    } 
+    catch (error) {
+      return next({
+        log: 'Error in userController.updateProfile middleware function',
+        status: 500,
+        message: { err: error.message },
+      });
+    }
 };
+
+// Deletes user entirely from database
+userController.deleteUser = async (req, res, next) => {
+    const { username } = req.params;
+      try {
+        const result = await User.findOneAndDelete({ username });
+        if (!user) {
+          throw Error('user not found');
+        }
+    res.locals.result = result;
+    return next();
+    } 
+    catch (error) {
+      return next({
+        log: 'Error in userController.deleteUser middleware function',
+        status: 500,
+        message: { err: error.message },
+      });
+    }
+};
+
+
 module.exports = userController;
+
+
+
 
 
 /// Old original code, for now, here, just in case catastropohe ?
@@ -206,7 +248,6 @@ module.exports = userController;
 //   }
 //   // findOne => return the user
 // };
-
 
 
 

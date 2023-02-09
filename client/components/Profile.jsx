@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAppPage, setGlobalUser, setIsLoggedIn } from '../slices';
 
 function Profile(props) {
+  const { appPage, signUpError, userName, onSignUp } = props;
+  const isLoggedIn = useSelector((state) => state.control.isLoggedIn);
+
   // adding properties to state
+  // const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [allergy, setAllergy] = useState(null);
   const [diet, setDiet] = useState(null);
-  // send JSON file to the server
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (isLoggedIn && appPage !== '/profile') {
+      console.log('update Proile of ...', userName);
+      // setProfileSettings(); //TBD ROUTE NEEDED...
+      dispatch(setAppPage('/feature')); //REMOVE THIS ONCE ROUTE IS ADDED!
+    }
+  }, [isLoggedIn]);
+
+  // send JSON file to the server
+  // if (!isLoggedIn) { // get from server
   //   useEffect(() => {
   //     fetch('http://localhost:3000/profile/:username')
   //       .then((res) => res.json())
@@ -22,9 +37,11 @@ function Profile(props) {
   //       })
   //       .catch((err) => console.log(err));
   //   }, []);
+  // }
 
-  const handleProfile = () => {
-    fetch('http://localhost:3000/profile/:username', {
+  const setProfileSettings = () => {
+    // update profile
+    fetch('/profile/' + userName, {
       method: 'POST',
       body: JSON.stringify({
         firstName,
@@ -34,11 +51,25 @@ function Profile(props) {
       }),
       headers: { 'Content-Type': 'application/json' },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Error! status: ${res.status}`);
+        }
+        res.json();
+      })
       .then((data) => {
         console.log('profile updated:', data);
+        if (!isLoggedIn) dispatch(setAppPage('/profile'));
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleProfile = () => {
+    if (!isLoggedIn) {
+      onSignUp();
+    } else {
+      setProfileSettings();
+    }
   };
 
   // list of items for the react-select
@@ -76,65 +107,85 @@ function Profile(props) {
   };
 
   const handleSubmit = (e) => {
-    alert('changes have been made');
+    e.preventDefault();
+    // alert('changes have been made');
   };
 
-  const navigate = useNavigate();
   const handleExit = () => {
-    navigate('/feature');
+    dispatch(setAppPage('/feature'));
   };
 
-  return (
+  const signUpRender = (input) => {
+    return (
+      <div>
+        {input}
+        {signUpError ? <span>Signup Failed, Invalid Input</span> : null}
+      </div>
+    );
+  };
+
+  const editProfileRender = (input) => {
+    return (
+      <div>
+        <h1>Edit My Profile</h1>
+        <form onSubmit={handleSubmit} className='loginContainer'>
+          {input}
+          <button onClick={handleExit}>Home Page</button>
+        </form>
+      </div>
+    );
+  };
+
+  const renderSettings = (
     <div>
-      <h1>Edit My Profile</h1>
-      <form onSubmit={handleSubmit} className='loginContainer'>
-        <div>
-          <label>
-            <b>First Name:</b>
-            <input id='firstName' type='text' onChange={handleChangeNames} />
-          </label>
-          <br />
-          <label>
-            <b>Last Name:</b>
-            <input id='lastName' type='text' onChange={handleChangeNames} />
-          </label>
-        </div>
-        <div>
-          <h2>My Allergies</h2>
-          <Select
-            isMulti
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderColor: state.isFocused ? '#e2ffe2' : 'salmon',
-              }),
-            }}
-            id='allergy'
-            options={allergies}
-            onChange={handleChangeAllergy}
-          />
-        </div>
-        <div>
-          <h2>My Diet</h2>
-          <Select
-            isMulti
-            styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                borderColor: state.isFocused ? '#e2ffe2' : 'salmon',
-              }),
-            }}
-            options={dietaryRestrictions}
-            onChange={handleChangeDiet}
-          />
-        </div>
-        <button onClick={handleProfile} type='submit'>
-          Submit
-        </button>
-        <button onClick={handleExit}>Home Page</button>
-      </form>
+      <div>
+        <label>
+          <b>First Name:</b>
+          <input id='firstName' type='text' onChange={handleChangeNames} />
+        </label>
+        <br />
+        <label>
+          <b>Last Name:</b>
+          <input id='lastName' type='text' onChange={handleChangeNames} />
+        </label>
+      </div>
+      <div>
+        <h2>My Allergies</h2>
+        <Select
+          isMulti
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              borderColor: state.isFocused ? '#e2ffe2' : 'salmon',
+            }),
+          }}
+          id='allergy'
+          options={allergies}
+          onChange={handleChangeAllergy}
+        />
+      </div>
+      <div>
+        <h2>My Diet</h2>
+        <Select
+          isMulti
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              borderColor: state.isFocused ? '#e2ffe2' : 'salmon',
+            }),
+          }}
+          options={dietaryRestrictions}
+          onChange={handleChangeDiet}
+        />
+      </div>
+      <button onClick={handleProfile} type='submit'>
+        {isLoggedIn ? 'Update Profile' : 'Sign Up'}
+      </button>
     </div>
   );
+
+  if (!isLoggedIn) return signUpRender(renderSettings);
+  else return editProfileRender(renderSettings);
 }
 
 export default Profile;

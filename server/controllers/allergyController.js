@@ -1,8 +1,9 @@
 const User = require('../models/userModel');
 const allergyController = {};
 
-  // IT *MUST* RECIEVE AN ARRAY AS THE VALUE OF FAVORIES
+  // Accepts an array of selections and adds them to the users allergy property
   allergyController.addAllergy = async (req, res, next) => {
+    // IT *MUST* RECIEVE AN ARRAY AS THE VALUE OF ALLERGY
     console.log('inside the add allergy');
     const { username } = req.params;
     const { allergy } = req.body;
@@ -12,9 +13,9 @@ const allergyController = {};
         throw Error('user not found');
       }
       
-      allergy.forEach((fav) => {
-        if (!user.allergy.includes(fav)) {
-          user.allergy.push(fav);
+      allergy.forEach((a) => {
+        if (!user.allergy.includes(a)) {
+          user.allergy.push(a);
         }
       });
       await user.save();
@@ -23,16 +24,17 @@ const allergyController = {};
       return next();
     } catch (error) {
       return next({
-        log: 'Error in userController.addallergy middleware function',
+        log: 'Error in allergyController.addallergy middleware function',
         status: 500,
         message: { err: error.message },
       });
     }
   };
   
-    // IT *MUST* RECIEVE AN ARRAY AS THE VALUE OF FAVORIES
+  // Accepts an array of selections and removes them from the users allergy property
   allergyController.deleteAllergy = async (req, res, next) => {
-    console.log('inside the delete favorite');
+    // IT *MUST* RECIEVE AN ARRAY AS THE VALUE OF ALLERGY
+    console.log('inside the delete allergy');
     const { username } = req.params;
     const deleteAllergy  = req.body.allergy;
     try {
@@ -49,13 +51,33 @@ const allergyController = {};
       return next();
     } catch (error) {
       return next({
-        log: 'Error in userController.deleteallergy middleware function',
+        log: 'Error in allergyController.deleteallergy middleware function',
         status: 500,
         message: { err: error.message },
       });
     }
   };
 
-  allergyController.getAllergy = async (req, res, next) => {}
+  // returns current allergies
+  allergyController.getAllergy = async (req, res, next) => {
+      console.log('inside the get allergy');
+      const { username } = req.params;
+      try {
+        const user = await User.findOne({ username: username });
+        if (!user) {
+          throw Error('user not found');
+        }
+        res.locals.allergy = user.allergy; // sends back updated allergy array
+        return next();
+      } catch (error) {
+        return next({
+          log: 'Error in allergyController.getallergy middleware function',
+          status: 500,
+          message: { err: error.message },
+        });
+      }
+  };
+  
+  
 
 module.exports = allergyController;

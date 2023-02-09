@@ -1,6 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ENV = require('dotenv').config().parsed;
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -51,7 +52,14 @@ module.exports = {
       publicPath: '/',
     },
     historyApiFallback: true,
-    port: 8080,
+    port: ENV.REACT_DEV_PORT,
     // contentBase: path.resolve(__dirname, './public'),
+    proxy: {
+      '/': {
+        target: 'http://localhost:3000/',
+        secure: false,
+        context: ['**'],
+      },
+    },
   },
 };
