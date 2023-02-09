@@ -41,16 +41,16 @@
 //   },
 // ];
 
-const populateDB = () => {
-  data.forEach((ailment) => {
-    const chunk = JSON.stringify(ailment);
-    Illness.create(chunk, (err, illness) => {
-      if (err) {
-        console.log(err);
-      } else console.log(illness);
-    });
-  });
-};
+// const populateDB = () => {
+//   data.forEach((ailment) => {
+//     const chunk = JSON.stringify(ailment);
+//     Illness.create(chunk, (err, illness) => {
+//       if (err) {
+//         console.log(err);
+//       } else console.log(illness);
+//     });
+//   });
+// };
 
 // // populateDB();
 
