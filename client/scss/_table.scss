@@ -3,26 +3,46 @@
 //navbar
 nav {
   margin: 2rem;
+  margin-bottom: 1rem;
   display: flex;
+  height: 10rem;
   justify-content: space-between;
   border-bottom: 1px solid $secondarySalmon;
   h1 {
     padding: 0.5rem;
     font-size: 4rem;
   }
-}
-
-.logoutContainer {
-  display: flex;
-  align-items: center;
-  align-self: center;
-  justify-content: end;
-  gap: 3rem;
-  font-size: 4rem;
-  button {
-    min-width: 20rem;
-    padding: 1.5rem;
-    border-radius: 1rem;
+  .logoutContainer {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: end;
+    gap: 2rem;
+    font-size: 4rem;
+    button {
+      min-width: 10rem;
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+    .profile,
+    .logout {
+      border: none;
+      display: flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: start;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-radius: 1rem;
+      font-size: 2rem;
+      background-color: $primarySalmon;
+      color: white;
+      &:hover {
+        background-color: darken($primarySalmon, 10);
+      }
+    }
   }
 }
 

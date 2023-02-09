@@ -1,6 +1,10 @@
 @import '_variables';
+@import '_header.scss';
 @import '_login.scss';
+@import '_signup.scss';
+@import '_profile.scss';
 @import '_table.scss';
+@import '_card.scss';
 @import '_dropdown.scss';
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Sen&display=swap');
 
@@ -15,30 +19,8 @@ body {
   font-family: 'Sen', sans-serif;
 }
 
-//card container
-.cardContainer {
-  height: 1000px;
-  width: 100vw;
-  margin: 16px;
-  padding: 30px;
-  display: flex;
-  grid-template-rows: repeat(4, 1fr);
-}
-.card {
-  height: 600px;
-  width: 600px;
-  margin: 16px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  box-shadow: 2px 2px gray;
-  justify-content: center;
-  h1 {
-    font-size: 20px;
-  }
-  h1 {
-    font-size: 15px;
-  }
-  li {
-    margin-bottom: 5px;
-  }
+.svg_icons {
+  padding: 0;
+  margin: 0;
+  transform: scale(3);
 }

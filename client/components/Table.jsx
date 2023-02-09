@@ -27,14 +27,6 @@ function Table(props) {
         }
         return <td>{`${property.quantity ? property.quantity.toFixed(2) : 0} ${property.unit}`}</td>;
       },
-
-        // if (column === 'linkedinValue') {
-        //   return <td><a href={row[column]} target="_blank" rel="noreferrer">{row[column]}</a></td>;
-        // }
-        // if (column === 'lastConnectionValue' || column === 'nextConnectionValue') {
-        //   const date = new Date(row[column]);
-        //   return <td>{date.toDateString()}</td>;
-        // }
       ),
       ]}
     </tr>

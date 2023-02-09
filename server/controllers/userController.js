@@ -109,9 +109,9 @@ userController.getProfile = async (req, res, next) => {
         if (!profile) {
           throw Error('user not found');
         }
-        const { firstname, lastname, allergy, diet, favorite, blacklist } = profile
+        const { firstName, lastName, allergy, diet, favorite, blacklist } = profile
 
-    res.locals.profile = { firstname, lastname, allergy, diet, favorite, blacklist };
+    res.locals.profile = { firstName, lastName, allergy, diet, favorite, blacklist };
     return next();
     } 
     catch (error) {

@@ -1,0 +1,28 @@
+//card container
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  flex-wrap: wrap;
+  max-height: 50vh;
+  .card {
+    min-height: 25rem;
+    min-width: 25%;
+    margin: 16px;
+    border: 0.125rem solid gray;
+    border-radius: 5px;
+    box-shadow: 2px 2px gray;
+    justify-content: center;
+    h1 {
+      font-size: 20px;
+    }
+    h1 {
+      font-size: 15px;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+  }
+}

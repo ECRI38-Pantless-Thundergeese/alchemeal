@@ -2,34 +2,26 @@
 import React, { useState, useEffect } from 'react';
 
 function Card(props) {
-  const { columns, rows, dataProperties } = props;
-  const [foodData, setFoodData] = useState([]);
- console.log("THIS IS IN THE CARD",  columns, rows, dataProperties)
-  
-console.log('testing rows', rows[0])
+  const { name, nutrients } = props;
 
-// const tableBody = rows.map((row) => (
-//       {[{row.name}, ...row.nutrients.map((property) => {
-//         console.log('property', property);
-//         if (!property) {
-//           return N/A
-//         }
-//         return {`${property.quantity ? property.quantity.toFixed(2) : 0} ${property.unit}`}
-//       },),]}
-//   ));
-
-
+console.log(nutrients[0])
   return (
     <div className="card">
       <div className="name">
-        <h1> Food:  </h1>
+        <h1> { name }  </h1>
       </div>
-      <ul className="detailsList">
+
         <h2>Nutrition Facts</h2>
-        {columns.slice(1).map((header, property) => (
-          <li key={property}>{header}: {`${property.quantity}`} </li>
-        ))}
-      </ul>
+        {nutrients.map((nutrient, i) => {  
+            if(nutrient === undefined){
+              return <h1></h1>
+            }
+           return <div>
+            <h4>{nutrient.label}</h4>
+            <h4>{nutrient.quantity.toFixed(2)}{nutrient.unit}</h4> 
+            </div>
+          })}
+
     </div>
   );
 }

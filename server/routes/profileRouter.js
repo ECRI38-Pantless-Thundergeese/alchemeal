@@ -7,8 +7,9 @@ const blacklistController = require('../controllers/blacklistController');
 const dietController = require('../controllers/dietController');
 const favoriteController = require('../controllers/favoriteController');
 const userController = require('../controllers/userController');
+const foodController = require('../controllers/foodController')
 
-// RETURNS full profile
+// RETURNS full profile (except for username and password)
 router.get(
   '/all/:username',
   userController.getProfile,
@@ -35,14 +36,16 @@ router.get(
   '/allergy/:username', allergyController.getAllergy, (req, res) => {
   const { allergy } = res.locals;
   return res.status(200).json(allergy);
-});
+  }
+);
 
 // Get diets
 router.get(
   '/diet/:username', dietController.getDiet, (req, res) => {
   const { diet } = res.locals;
   return res.status(200).json(diet);
-});
+  }
+);
 
 // Get favorites
 router.get(
@@ -69,14 +72,16 @@ router.post(
   '/allergy/:username', allergyController.addAllergy, (req, res) => {
   const { allergy } = res.locals;
   return res.status(200).json(allergy);
-});
+  }
+);
 
 // ADD to diets
 router.post(
   '/diet/:username', dietController.addDiet, (req, res) => {
   const { diet } = res.locals;
   return res.status(200).json(diet);
-});
+  }
+);
 
 // Add to favorites
 router.post(
@@ -114,7 +119,8 @@ router.delete(
   '/diet/:username', dietController.deleteDiet, (req, res) => {
   const { diet } = res.locals;
   return res.status(200).json(diet);
-});
+  }
+);
 
 // REMOVE from favorites
 router.delete(

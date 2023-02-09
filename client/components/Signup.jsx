@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
+import Login from './Login';
 import Profile from './Profile';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsLoggedIn, setGlobalUser } from '../slices';
 
 function Signup(props) {
-  const { appPage } = props;
+  const { appPage, oAuth, oAuthHandler } = props;
   const [signUpError, setSignUpError] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  const handleChange = (event) => {
-    console.log('username before click', username);
-    if (event.target.id === 'username') setUsername(event.target.value);
-    if (event.target.id === 'password') setPassword(event.target.value);
+  const handleUserNameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   const handleSignup = () => {
@@ -74,35 +77,18 @@ function Signup(props) {
     <div className='signupWrapper'>
       <form onSubmit={handleSubmit} className='signupContainer'>
         <h1>Sign Up</h1>
-        <label htmlFor='username'>
-          <b>Create a username</b>
-          <input
-            id='username'
-            type='text'
-            onChange={handleChange}
-            placeholder='Enter Username'
-            name='username'
-            required
-          />
-        </label>
-
-        <label htmlFor='password'>
-          <b>Create a password</b>
-          <input
-            id='password'
-            type='text'
-            onChange={handleChange}
-            placeholder='Enter Password'
-            name='password'
-            required
-          />
-        </label>
-        <Profile
+        <Login
           isSignUp={true}
+          handleUser={handleUserNameChange}
+          handlePassword={handlePasswordChange}
+        />
+        <Profile
           userName={username}
           appPage={appPage}
           onSignUp={handleSignup}
           signUpError={signUpError}
+          oAuth={oAuth}
+          oAuthHandler={oAuthHandler}
         />
       </form>
     </div>

@@ -8,7 +8,7 @@
   justify-content: space-evenly;
   align-items: center;
   width: 100vw;
-  max-height: 50rem;
+  max-height: 30vh;
   background-color: $lightestLime;
 
   .dropdown {
@@ -33,34 +33,32 @@
       text-align: center;
     }
     button {
-      max-width: 50%;
-      padding: 1.5rem;
+      min-width: 10rem;
       border-radius: 1rem;
+      border: none;
+      display: flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: start;
+      // min-width: 25rem;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      border-radius: 1rem;
+      font-size: 3rem;
+      background-color: $primarySalmon;
+      color: white;
+      &:hover {
+        background-color: darken($primarySalmon, 10);
+      }
     }
-    // select {
-    //   appearance: none;
-    //   text-align: center;
-    //   margin: 2rem;
-    //   font-size: 4rem;
-    //   padding: 1rem;
-    //   min-width: 25rem;
-    //   background-color: white;
-    //   border-radius: 0.5rem;
-    // }
-    // select::-ms-expand {
-    //   display: none;
-    // }
-    // option {
-    //   font-size: 4rem;
-    //   text-align: center;
-    // }
 
     select {
       cursor: pointer;
       -webkit-appearance: none;
       -moz-appearance: none;
       position: relative;
-      background-color: lighten($primarySalmon, 10);
+      background-color: darken($primarySalmon, 5);
       background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='3rem' viewBox='0 0 24 24' width='3rem' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
       background-repeat: no-repeat;
       background-position-x: 100%;

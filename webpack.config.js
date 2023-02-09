@@ -23,6 +23,32 @@ module.exports = {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
+      {
+        test: /\.html$/i,
+        use: 'html-loader',
+      },
+      {
+        test: /\.(jpe?g|png)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name]-[hash][ext]',
+        },
+        use: [
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              pngquant: {
+                quality: [0.9, 0.95],
+              },
+            },
+          },
+        ],
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10kb
+          },
+        },
+      },
     ],
   },
   resolve: {

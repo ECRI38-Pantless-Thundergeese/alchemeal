@@ -2,7 +2,7 @@
 
 // 1b. Login page
 
-.loginWrapper {
+.profileWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +12,7 @@
   height: 90vh;
 }
 
-.loginContents {
+.profileContents {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +23,7 @@
   }
 }
 
-.loginContainer {
+.profileContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -39,6 +39,13 @@
 
   h1 {
     font-size: 9rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    font-size: 2rem;
   }
   b {
     min-width: 20rem;
@@ -58,20 +65,13 @@
     color: lighten(black, 50);
   }
   .text-box {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
-  //   align-self: center;
-  //   font-size: 4rem;
-  //   width: 100%;
-  //   min-height: 10rem;
-  //   text-align: start;
-  //   padding-left: 3rem;
-  //   padding-right: 3rem;
-  // }
-
   span {
-    // color: red;
+    color: red;
     font-size: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
   }
   .divider {
     color: lighten(black, 20);
@@ -97,7 +97,8 @@
     transform: translate(-4rem, 0);
   }
   .signup,
-  .login {
+  .login,
+  .back {
     transform: translate(0, 0);
     border: none;
     display: flex;
@@ -107,6 +108,7 @@
     justify-items: start;
     min-width: 25rem;
     padding: 1.5rem;
+    margin-top: 2rem;
     margin-bottom: 3rem;
     border-radius: 1rem;
     font-size: 2rem;
@@ -116,10 +118,8 @@
       background-color: darken($primarySalmon, 10);
     }
   }
-  .google-auth {
-    transform: translate(0, 0);
-    min-width: 25rem;
-    background-image: require('../');
-    margin-bottom: 3rem;
+  .select {
+    font-size: 3rem;
+    width: 100%;
   }
 }

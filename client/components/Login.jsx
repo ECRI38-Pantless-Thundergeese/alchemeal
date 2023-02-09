@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAppPage, setGlobalUser, setIsLoggedIn } from '../slices';
+import TextBox from './TextBox';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
 
 function Login(props) {
-  const { appPage } = props;
+  const { appPage, isSignUp, handleUser, handlePassword, oAuth, oAuthHandler } =
+    props;
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
   useEffect(() => {
+    if (isSignUp) return;
+
     console.log('checking if user already logged in...');
     fetch('/verify', {
       method: 'GET',
@@ -35,10 +44,17 @@ function Login(props) {
       });
   }, []);
 
-  const handleChange = (event) => {
-    console.log('username before click', username);
-    if (event.target.id === 'username') setUsername(event.target.value);
-    if (event.target.id === 'password') setPassword(event.target.value);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleUserNameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   const handleSignup = (e) => {
@@ -82,47 +98,76 @@ function Login(props) {
     e.target.reset();
   }
 
-  return (
-    <div className='loginWrapper'>
-      <form onSubmit={handleSubmit} className='loginContainer'>
-        <h1>Food Remedy</h1>
-        <label htmlFor='username'>
-          <b>Username</b>
-          <input
-            id='username'
-            type='text'
-            onChange={handleChange}
-            placeholder='Enter Username'
-            name='username'
-            // required={appPage !== '/' ? false : true}
-          />
-        </label>
-
-        <label htmlFor='password'>
-          <b>Password</b>
-          <input
-            id='password'
-            type='text'
-            onChange={handleChange}
-            placeholder='Enter Password'
-            name='password'
-            // required={appPage !== '/' ? false : true}
-          />
-        </label>
-
-        <button type='submit' onClick={handleLogin}>
-          LOGIN
-        </button>
-        {loginError ? <span>Username or Password Incorrect</span> : null}
-        <hr></hr>
-        <p>
-          <b>Don't have an account?</b>
-        </p>
-        <button type='submit' onClick={handleSignup}>
-          Sign Up With Alchemeal
-        </button>
-      </form>
-    </div>
+  const inputFields = (
+    <tb>
+      <TextBox
+        className='TextBox'
+        labelClass='label'
+        label='Username'
+        name='userName'
+        required={true}
+        onChange={handleUser ? handleUser : handleUserNameChange}
+      />
+      <TextBox
+        id='outlined-adornment-password'
+        type={showPassword ? 'text' : 'password'}
+        endAdornment={
+          <InputAdornment position='end'>
+            <IconButton
+              aria-label='toggle password visibility'
+              onClick={handleClickShowPassword}
+              onMouseDown={handleMouseDownPassword}
+              edge='end'
+            >
+              {showPassword ? (
+                <VisibilityOff className='svg_icons' />
+              ) : (
+                <Visibility className='svg_icons' />
+              )}
+            </IconButton>
+          </InputAdornment>
+        }
+        label='Password'
+        onChange={handlePassword ? handlePassword : handlePasswordChange}
+      />
+    </tb>
   );
+
+  if (appPage !== '/') {
+    return inputFields;
+  } else {
+    return (
+      <div className='loginWrapper'>
+        <form onSubmit={handleSubmit} className='loginContainer'>
+          <h1>AlcheMEal</h1>
+          {inputFields}
+          <button className='login' type='submit' onClick={handleLogin}>
+            LOGIN
+          </button>
+
+          {oAuth ? (
+            <>
+              <button class='google-auth' onClick={oAuthHandler}>
+                <img
+                  src={require('../images/btn_google_signin_dark_normal_web@2x.png')}
+                />
+              </button>
+            </>
+          ) : null}
+          {loginError ? (
+            <span style={{ color: 'red' }}>Username or Password Incorrect</span>
+          ) : (
+            <span style={{ color: 'white' }}>''</span>
+          )}
+          <div className='section-div'>
+            <span className='divider'>Don't have an account?</span>
+          </div>
+          <button className='signup' type='submit' onClick={handleSignup}>
+            SIGN UP
+          </button>
+        </form>
+      </div>
+    );
+  }
 }
 export default Login;

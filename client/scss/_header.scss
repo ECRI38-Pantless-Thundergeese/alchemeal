@@ -1,0 +1,17 @@
+.header {
+  background-color: $lightestLime;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+  // padding: 1rem;
+  .logo {
+    height: 10vh;
+    &:hover {
+      rotate: 180deg;
+      transition: 500ms linear all;
+      // zoom: 1.1;
+    }
+  }
+}
