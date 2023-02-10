@@ -1,0 +1,85 @@
+@import '_variables';
+
+//navbar
+nav {
+  margin: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  height: 10rem;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $secondarySalmon;
+  h1 {
+    color: lighten(rgb(59, 20, 59), 20);
+    font-family: Carnet-de-voyage;
+    padding: 0.5rem;
+    font-size: 5rem;
+    font-weight: 200;
+  }
+  .logoutContainer {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: end;
+    max-width: 50vw;
+    gap: 2rem;
+    // font-size: 3rem;
+    font-size: calc(1vw + 1vh);
+    button {
+      min-width: 10rem;
+      padding: 1.5rem;
+      border-radius: 1rem;
+    }
+    .profile,
+    .logout {
+      border: none;
+      display: flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: start;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      border-radius: 1rem;
+      font-size: 2rem;
+      background-color: $primarySalmon;
+      color: white;
+      &:hover {
+        background-color: darken($primarySalmon, 10);
+      }
+    }
+  }
+}
+
+table {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  margin-top: 2rem;
+
+  thead {
+    font-size: 1.5rem;
+    th {
+      background-color: $lightestSalmon;
+      border: 0.25rem solid white;
+      text-align: center;
+      padding: 1rem;
+      width: 7rem;
+    }
+    tr {
+      padding: 10px;
+    }
+  }
+  tbody {
+    text-align: center;
+    background-color: white;
+    font-size: 1.5rem;
+    td {
+      padding: 1rem;
+      margin-left: 1rem;
+      width: 7rem;
+    }
+  }
+}

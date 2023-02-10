@@ -47,6 +47,9 @@ typings/
 # TypeScript cache
 *.tsbuildinfo
 
+# ignore vscode
+.vscode/
+
 # Optional npm cache directory
 .npm
 
@@ -102,3 +105,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Build folder
+public/

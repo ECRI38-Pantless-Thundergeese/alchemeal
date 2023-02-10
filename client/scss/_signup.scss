@@ -1,0 +1,180 @@
+@import '_variables';
+
+// 1b. Login page
+
+.signupWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  background-color: $lightestLime;
+  height: 90vh;
+}
+
+.signupContents {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    margin-top: 100px;
+  }
+}
+
+.signupContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  justify-items: center;
+  border: 0.125rem solid $secondarySalmon;
+  border-radius: 5%;
+  width: 80%;
+  height: auto;
+  box-shadow: 1rem 1.5rem 1.6rem 0rem rgb(128, 128, 128, 0.1);
+  background-color: white;
+  // padding: 1rem;
+
+  h1 {
+    font-size: 9rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+  b {
+    min-width: 20rem;
+    text-align: center;
+  }
+  input {
+    font-size: 4rem;
+  }
+  tb {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 50rem;
+  }
+  label {
+    font-size: 3rem;
+    color: lighten(black, 50);
+  }
+  .text-box {
+    margin-bottom: 2rem;
+  }
+  span {
+    color: red;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .divider {
+    color: lighten(black, 20);
+    background-color: white;
+    padding: 0 0.5rem;
+  }
+  hr {
+    border: 0.125rem solid $secondarySalmon;
+    width: 75%;
+  }
+  .section-div {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+    width: 80%;
+    height: 0.5rem;
+    border-bottom: 0.25rem solid black;
+  }
+  button {
+    transform: translate(-4rem, 0);
+  }
+  .signup,
+  .login {
+    transform: translate(0, 0);
+    border: none;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: start;
+    min-width: 25rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    font-size: 2rem;
+    background-color: $primarySalmon;
+    color: white;
+    &:hover {
+      background-color: darken($primarySalmon, 10);
+    }
+  }
+  .select {
+    font-size: 3rem;
+    width: 100%;
+  }
+}
+
+.google-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin: 2rem;
+  min-width: 25rem;
+  height: 42px;
+
+  background-color: #fcfcfc;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  cursor: hand;
+  align-self: center;
+  user-select: none;
+  transition: all 400ms ease 0s;
+  display: flex;
+  .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    user-select: none;
+  }
+  .google-icon-svg {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+    user-select: none;
+  }
+  .btn-text {
+    float: right;
+    margin: 11px 14px 40px 40px;
+    color: #757575;
+    font-size: 2rem;
+    letter-spacing: 0.2px;
+    font-family: Roboto;
+    user-select: none;
+  }
+  &:hover {
+    box-shadow: 0 3px 8px rgba(117, 117, 117, 0.5);
+    user-select: none;
+  }
+  &:active {
+    box-shadow: 0 1px 1px #757575;
+    background: #f8f8f8;
+    color: #fff;
+    user-select: none;
+  }
+}

@@ -15,3 +15,4 @@ const illnessSchema = new mongoose.Schema({
 const Illness = mongoose.model('Illness', illnessSchema);
 
 module.exports = Illness;
+

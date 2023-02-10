@@ -1,0 +1,121 @@
+@import '_variables';
+@import '_mixins';
+//dropdown
+
+.dropdown-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100vw;
+  // max-height: 30vh;
+  background-color: $lightestLime;
+
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 4rem;
+    margin: 1.5rem;
+    padding: 1rem;
+    border: 0.125rem solid $secondarySalmon;
+    border-radius: 5%;
+    width: 50rem;
+    height: 100%;
+    box-shadow: 1rem 1.5rem 1.6rem 0rem rgb(128, 128, 128, 0.1);
+    background-color: white;
+    label {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      text-align: center;
+    }
+    button {
+      min-width: 10rem;
+      border-radius: 1rem;
+      border: none;
+      display: flex;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      justify-items: start;
+      // min-width: 25rem;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+      border-radius: 1rem;
+      font-size: 3rem;
+      background-color: $primarySalmon;
+      color: white;
+      &:hover {
+        background-color: darken($primarySalmon, 10);
+      }
+    }
+
+    select {
+      cursor: pointer;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      background-color: darken($primarySalmon, 5);
+      background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='3rem' viewBox='0 0 24 24' width='3rem' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-repeat: no-repeat;
+      background-position-x: 100%;
+      background-position-y: 50%;
+      color: $select-color;
+      width: auto;
+      height: auto;
+      font-size: 5rem;
+      padding: 1rem;
+      // border: none;
+      border-radius: 0.5rem;
+      margin: 1rem;
+      // text-align-last: center;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      // direction: ltr;
+      @include transition(all 0.2s ease-in);
+      &:focus > option:checked {
+        background: $select-background !important;
+      }
+      &:focus-visible {
+        outline: none;
+      }
+      &:hover {
+        background-color: darken($select-background, 2);
+      }
+      option {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: darken($primarySalmon, 5);
+        // border: none;
+        padding-right: 3rem;
+
+        // text-align: center;
+        @include transition(all 0.15s ease-in);
+        &:hover,
+        &.is-selected {
+          color: $select-background;
+          background: $select-color;
+        }
+        &[rel='hide'] {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+// select option:checked,
+// select option:hover {
+//   box-shadow: 0 0 10px 100px #000 inset;
+// }
+
+// .dropdown label {
+//   padding: 20px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: column;
+// }

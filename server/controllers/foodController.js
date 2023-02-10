@@ -1,25 +1,20 @@
 const Illness = require('../models/illnessModels');
+const ENV = require('dotenv').config().parsed;
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const foodController = {};
 
-// const accessPoint = 'https://api.edamam.com/api/nutrition-data';
+const preciseURL = process.env.PRECISE_URL;
 
-// const app_id = 'c3e5b6ff';
-
-// const app_key = 'b23cc3a2748cbdbbc9893ef62a4fffd0';
-
-const preciseURL =
-  'https://api.edamam.com/api/nutrition-data?app_id=c3e5b6ff&app_key=b23cc3a2748cbdbbc9893ef62a4fffd0&nutrition-type=cooking&ingr=1%20ounce%20';
-
-// gets
 foodController.getFoods = (req, res, next) => {
   // queries mongoDB for illness, saves related foods in res locals
   console.log('hitting get foods');
   try {
     Illness.findOne({ ailment: req.body.ailment }).then((data) => {
       res.locals.foods = data.foods;
+      // console.log('this is data', res.locals.foods)
       return next();
     });
   } catch (error) {
@@ -32,20 +27,23 @@ foodController.getFoods = (req, res, next) => {
 };
 
 foodController.getFacts = async (req, res, next) => {
-  console.log('hitting get facts');
-  res.locals.facts = [];
+  console.log('inside of getFacts in food controller');
+
   try {
-    for (let food of res.locals.foods) {
-      const newURL = preciseURL + food;
-      const response = await fetch(newURL);
-      const data = await response.json();
-      res.locals.facts.push(data);
-    }
-    console.log('length', res.locals.facts.length);
+    const facts = await Promise.all(
+      res.locals.foods.map(async (food) => {
+        const newURL = preciseURL + food;
+        const response = await fetch(newURL);
+        return response.json();
+      })
+    );
+    res.locals.facts = facts;
+
+    console.log(facts);
+    // console.log('length', res.locals.facts.length);
     return next();
   } catch (error) {
     console.log(error);
-    // error
     return next({
       log: 'Express error handler caught getFacts handler',
       status: 500,
@@ -54,6 +52,66 @@ foodController.getFacts = async (req, res, next) => {
   }
 };
 
-module.exports = foodController;
+foodController.filterAllergy = async (req, res, next) => {
+  console.log('inside of filter allergy');
+  const foods = res.locals.foods;
+  const facts = res.locals.facts;
+  const user = res.locals.profile;
 
-// https://api.edamam.com/api/nutrition-data?app_id=c3e5b6ff&app_key=b23cc3a2748cbdbbc9893ef62a4fffd0&nutrition-type=cooking&ingr=1%20ounce%20banana
+  const goodFood = new Set();
+  const goodFacts = new Set();
+  if (user.allergy.length > 0) {
+    for (let i = 0; i < facts.length; i++) {
+      let labels = facts[i].healthLabels;
+      let include = true;
+      for (const allergen of user.allergy) {
+        if (!labels.includes(allergen.value.toUpperCase() + '_FREE')) {
+          include = false;
+          break;
+        }
+      }
+      if (include) {
+        goodFood.add(foods[i]);
+        goodFacts.add(facts[i]);
+      }
+    }
+    console.log(goodFood);
+
+    res.locals.foods = Array.from(goodFood);
+    res.locals.facts = Array.from(goodFacts);
+  }
+  return next();
+};
+
+foodController.filterDiet = async (req, res, next) => {
+  console.log('inside of filter diet');
+  const foods = res.locals.foods;
+  const facts = res.locals.facts;
+  const diets = res.locals.profile.diet;
+
+  const goodFood = new Set();
+  const goodFacts = new Set();
+
+  if (diets.length > 0) {
+    for (let i = 0; i < facts.length; i++) {
+      let labels = facts[i].healthLabels;
+      let include = true;
+      for (const d of diets) {
+        if (!labels.includes(d.value.toUpperCase())) {
+          include = false;
+          break;
+        }
+      }
+      if (include) {
+        goodFood.add(foods[i]);
+        goodFacts.add(facts[i]);
+      }
+    }
+    res.locals.foods = Array.from(goodFood);
+    res.locals.facts = Array.from(goodFacts);
+    console.log(goodFood);
+  }
+  return next();
+};
+
+module.exports = foodController;
