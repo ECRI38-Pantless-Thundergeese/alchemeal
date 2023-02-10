@@ -102,6 +102,18 @@
   }
 }
 
+stats {
+  display: block;
+  transition: opacity 1s ease-out;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+.show {
+  opacity: 1;
+  height: auto;
+}
+
 .viewopts {
   display: flex;
   flex-direction: column;

@@ -47,9 +47,14 @@ function Card(props) {
     }
   };
 
+  const handleCardClick = (e) => {
+    const stats = document.querySelector('#' + name.split(' ').at(-1));
+    stats.classList.toggle('show');
+  };
+
   console.log(nutrients[0]);
   return (
-    <div className='card'>
+    <div className='card' onClick={handleCardClick}>
       <div className='name'>
         <div class='foodicon'>
           <h1> {name} </h1>
@@ -59,30 +64,32 @@ function Card(props) {
 
       <h2>Nutrition Facts</h2>
       <section></section>
-      {units === 'Percentage' ? (
-        <>
-          <div>
-            <h5> </h5>
-
-            <h5>% Daily Value*</h5>
-          </div>
-          <subsection></subsection>
-        </>
-      ) : null}
-      {nutrients.map((nutrient, i) => {
-        if (nutrient === undefined) {
-          return <h1></h1>;
-        }
-        return (
+      <stats id={name.split(' ').at(-1)}>
+        {units === 'Percentage' ? (
           <>
             <div>
-              <h4>{nutrient.label}</h4>
-              {labelElement(nutrient, i)}
+              <h5> </h5>
+
+              <h5>% Daily Value*</h5>
             </div>
             <subsection></subsection>
           </>
-        );
-      })}
+        ) : null}
+        {nutrients.map((nutrient, i) => {
+          if (nutrient === undefined) {
+            return <h1></h1>;
+          }
+          return (
+            <>
+              <div>
+                <h4>{nutrient.label}</h4>
+                {labelElement(nutrient, i)}
+              </div>
+              <subsection></subsection>
+            </>
+          );
+        })}
+      </stats>
     </div>
   );
 }
