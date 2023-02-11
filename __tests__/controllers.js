@@ -1,11 +1,13 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('../server/models/userModel');
+const Illness = require('../server/models/illnessModels');
 
 const allergyController = require('../server/controllers/allergyController');
 const blacklistController = require('../server/controllers/blacklistController');
 const dietController = require('../server/controllers/dietController');
 const favoriteController = require('../server/controllers/favoriteController');
+const foodController = require('../server/controllers/foodController');
 
 describe('Controller Functionality Tests', () => {
   // Set mock req object, res object, next function
@@ -48,6 +50,12 @@ describe('Controller Functionality Tests', () => {
         return User.create({
           username: 'testUser',
           password: 'testUser',
+        });
+      })
+      .then(() => {
+        return Illness.create({
+          ailment: 'test',
+          foods: ['test'],
         });
       })
       .then(() => done())
@@ -1212,12 +1220,51 @@ describe('Controller Functionality Tests', () => {
       });
     });
   });
-  // describe('Food Controller', () => {
-  //   describe('Get Foods', () => {});
-  //   describe('Add Get Facts', () => {});
-  //   describe('Filter Allergy', () => {});
-  //   describe('Filter Diet', () => {});
-  // });
+  describe('Food Controller', () => {
+    describe('Get Foods', () => {
+      it('Should save the related foods for a given ailmemt to res.locals', (done) => {
+        req.body.ailment = 'test';
+
+        foodController
+          .getFoods(req, res, next)
+          .then(() => {
+            expect(res.locals.foods).toEqual(['test']);
+            return done();
+          })
+          .catch((err) => done(err));
+      });
+
+      it('Should invoke next', (done) => {
+        req.body.ailment = 'test';
+
+        foodController
+          .getFoods(req, res, next)
+          .then(() => {
+            expect(next).toHaveBeenCalled();
+            return done();
+          })
+          .catch((err) => done(err));
+      });
+
+      it('Should throw error with next if ailment not found', (done) => {
+        req.body.ailment = 'fakeAilment';
+
+        foodController
+          .getFoods(req, res, next)
+          .then(() => {
+            expect(next.mock.calls[0][0]).toBeDefined();
+            return done();
+          })
+          .catch((err) => done(err));
+      });
+    });
+    // describe('Add Get Facts', () => {
+    // });
+    // describe('Filter Allergy', () => {
+    // });
+    // describe('Filter Diet', () => {
+    // });
+  });
   // describe('User Controller', () => {
   //   describe('Create User', () => {});
   //   describe('Verify User', () => {});
