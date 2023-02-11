@@ -146,13 +146,17 @@ function Login(props) {
           </button>
 
           {oAuth ? (
-            <>
-              <button class='google-auth' onClick={oAuthHandler}>
+            <div class='google-btn' onClick={oAuthHandler}>
+              <div class='google-icon-wrapper'>
                 <img
-                  src={require('../images/btn_google_signin_dark_normal_web@2x.png')}
+                  class='google-icon-svg'
+                  src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
                 />
-              </button>
-            </>
+              </div>
+              <p class='btn-text'>
+                <b>Sign in with Google</b>
+              </p>
+            </div>
           ) : null}
           {loginError ? (
             <span style={{ color: 'red' }}>Username or Password Incorrect</span>

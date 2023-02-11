@@ -1,7 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ENV = require('dotenv').config().parsed;
+const Dotenv = require('dotenv-webpack');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
@@ -53,6 +53,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
+    fallback: { os: require.resolve('os-browserify/browser') },
   },
   output: {
     path: path.resolve(__dirname, './public'),
@@ -61,6 +62,11 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({
       template: './client/index.html',
+    }),
+    new Dotenv({
+      path: path.resolve(__dirname, './.env'),
+      safe: true,
+      defaults: true,
     }),
   ].concat(
     devMode
@@ -78,7 +84,7 @@ module.exports = {
       publicPath: '/',
     },
     historyApiFallback: true,
-    port: ENV.REACT_DEV_PORT,
+    port: process.env.REACT_DEV_PORT,
     // contentBase: path.resolve(__dirname, './public'),
     proxy: {
       '/': {

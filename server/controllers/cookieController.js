@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ENV = require('dotenv').config().parsed;
-const secret = ENV.JWT_SECRET;
+const secret = process.env.JWT_SECRET;
 
 const cookieController = {};
 
@@ -8,7 +7,7 @@ const cookieController = {};
 cookieController.setSessionCookie = (req, res, next) => {
   const { _id, username } = res.locals.user;
 
-  const sessionToken = jwt.sign({_id, username}, secret);
+  const sessionToken = jwt.sign({ _id, username }, secret);
   res.cookie('sessionToken', sessionToken, { httpOnly: true });
 
   return next();
@@ -28,14 +27,13 @@ cookieController.verifySessionCookie = async (req, res, next) => {
   // Decode token
   const { sessionToken } = req.cookies;
   jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
-		if (err) {
-			return next({
+    if (err) {
+      return next({
         log: `ERROR - cookieController.verifySessionCookie, failed to verify token: ${err}`,
         status: 400,
         message: { err: 'User is not authenticated.' },
       });
-		} 
-    else {
+    } else {
       res.locals.user = decoded;
       return next();
     }
@@ -49,4 +47,4 @@ cookieController.removeSessionCookie = (req, res, next) => {
   return next();
 };
 
-module.exports = cookieController
+module.exports = cookieController;

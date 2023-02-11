@@ -4,13 +4,15 @@ import Card from './Card';
 
 function Cardlist(props) {
   const { columns, rows, dataProperties } = props;
-  
+
   return (
-    <div className="cardContainer">
+    <div className='cardContainer'>
       {rows.map((fooditem, i) => (
-        <Card key={i}
+        <Card
+          key={i}
           name={fooditem.name}
           nutrients={fooditem.nutrients}
+          units={props.units}
         />
       ))}
     </div>

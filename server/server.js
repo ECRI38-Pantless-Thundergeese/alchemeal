@@ -71,10 +71,10 @@ app.post(
   userController.getProfile,
   foodController.getFoods,
   foodController.getFacts,
-  foodController.filterAllergy, 
+  foodController.filterAllergy,
   foodController.filterDiet,
   (req, res) => {
-    console.log("you  made it babbeee, this shits filtered!")
+    console.log('you  made it babbeee, this shits filtered!');
     return res.status(200).send(res.locals.facts);
   }
 );

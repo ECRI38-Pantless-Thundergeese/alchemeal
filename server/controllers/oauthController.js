@@ -1,11 +1,10 @@
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const User = require('../models/userModel');
-const ENV = require('dotenv').config().parsed;
 const { google } = require('googleapis');
 const oauth2Client = new google.auth.OAuth2(
-  ENV.GOOGLE_CLIENT_ID,
-  ENV.GOOGLE_SECRET,
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_SECRET,
   'http://localhost:3000/oauth/google'
 );
 

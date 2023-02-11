@@ -21,8 +21,7 @@ function Profile(props) {
   useEffect(() => {
     if (isLoggedIn && appPage !== '/profile') {
       console.log('update Proile of ...', globalUser);
-      // setProfileSettings(); //TBD ROUTE NEEDED...
-      dispatch(setAppPage('/feature')); //REMOVE THIS ONCE ROUTE IS ADDED!
+      setProfileSettings();
     }
   }, [isLoggedIn]);
 
@@ -62,6 +61,7 @@ function Profile(props) {
       .then((data) => {
         console.log('profile updated:', data);
         if (!isLoggedIn) dispatch(setAppPage('/profile'));
+        else dispatch(setAppPage('/feature'));
       })
       .catch((err) => console.log(err));
   };

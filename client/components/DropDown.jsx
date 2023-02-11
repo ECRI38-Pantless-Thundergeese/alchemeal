@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import camelCase from 'camelcase';
-const AILMENTS = require('../../constants');
-
+const { AILMENTS } = require('../../constants');
+const { capitalizeWord } = require('../../utilities');
 function DropDown(props) {
   const { ailment, handleChange, handleClick } = props;
   const options = AILMENTS.map((elem, i) => (
     <option key={i} value={elem}>
-      {camelCase(elem)}
+      {capitalizeWord(elem)}
     </option>
   ));
   return (

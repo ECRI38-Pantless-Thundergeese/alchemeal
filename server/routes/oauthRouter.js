@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const ENV = require('dotenv').config().parsed;
 
 const oauthController = require('../controllers/oauthController');
 const cookieController = require('../controllers/cookieController');
@@ -25,7 +24,10 @@ router.get(
     if (process.env.NODE_ENV === 'production') {
       return res.status(302).redirect('/');
     }
-    return res.status(302).redirect(`http://localhost:${ENV.REACT_DEV_PORT}`);
+
+    return res
+      .status(302)
+      .redirect(`http://localhost:${process.env.REACT_DEV_PORT}`);
   }
 );
 

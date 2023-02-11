@@ -6,6 +6,10 @@
 @import '_table.scss';
 @import '_card.scss';
 @import '_dropdown.scss';
+@import '_fonts.scss';
+@include font('Arvo', '../fonts/aAnggota');
+@include font('Carnet-de-voyage', '../fonts/Carnet-de-voyage');
+@include font('Churro-Regular-Font', '../fonts/Churro-Regular-Font');
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Sen&display=swap');
 
 // Global
@@ -24,3 +28,7 @@ body {
   margin: 0;
   transform: scale(3);
 }
+
+// .main {
+//   height: 100vh;
+// }

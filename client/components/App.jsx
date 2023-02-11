@@ -61,7 +61,7 @@ function App(props) {
   };
 
   return (
-    <div>
+    <div className='main'>
       {header}
       {getCurrentPage()}
     </div>

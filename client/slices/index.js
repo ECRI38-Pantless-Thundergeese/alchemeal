@@ -5,6 +5,7 @@ const initialState = {
   globalUser: '',
   isLoggedIn: false,
   oAuthEnabled: true,
+  viewOption: 'Cardlist',
 };
 
 const controlSlice = createSlice({
@@ -26,6 +27,9 @@ const controlSlice = createSlice({
     setOAuthEnable(state, action) {
       state.oAuthEnabled = action.payload;
     },
+    setViewOption(state, action) {
+      state.viewOption = action.payload;
+    },
   },
 });
 
@@ -35,6 +39,7 @@ export const {
   setGlobalUser,
   setIsLoggedIn,
   setOAuthEnable,
+  setViewOption,
 } = controlSlice.actions;
 
 export default controlSlice.reducer;

@@ -1,3 +1,5 @@
+@import '_variables';
+@import '_mixins';
 //card container
 .cardContainer {
   display: flex;
@@ -6,23 +8,169 @@
   justify-content: center;
   justify-items: center;
   flex-wrap: wrap;
-  max-height: 50vh;
+  // max-height: 50vh;
   .card {
+    font-family: Roboto;
+    background: white;
+    padding: 2rem;
+    // align-items: flex-start;
+    // grid-auto-flow: dense;
+    // gap: 1rem;
+    border: none;
+    box-shadow: 0.125rem 0.5rem 1rem 0.25rem lighten(gray, 25);
+
+    // grid-template: repeat(auto-fit, 20rem);
     min-height: 25rem;
-    min-width: 25%;
+    // min-width: 25%;
     margin: 16px;
-    border: 0.125rem solid gray;
-    border-radius: 5px;
-    box-shadow: 2px 2px gray;
-    justify-content: center;
-    h1 {
-      font-size: 20px;
+    // border: 0.125rem solid gray;
+    border-radius: 1rem;
+    // justify-content: center;
+
+    .foodicon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
     }
     h1 {
-      font-size: 15px;
+      font-weight: bold;
+      font-size: 2.2rem;
+      text-align: center;
+    }
+    h2 {
+      font-weight: bold;
+      font-size: 2rem;
+      text-align: center;
     }
     li {
-      margin-bottom: 5px;
+      margin-bottom: 1rem;
+    }
+    .is-hidden {
+      display: none;
+    }
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .name {
+      justify-content: center;
+    }
+    h4 {
+      font-weight: 100;
+      font-size: 2rem;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+    h5 {
+      font-weight: bold;
+      font-size: 1rem;
+      padding: 0;
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+    hr {
+      border: 0.125rem solid $secondarySalmon;
+      width: 75%;
+    }
+    section {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      // margin-top: 4rem;
+      // margin-bottom: 3rem;
+      width: 100%;
+      // height: 0.5rem;
+      border-bottom: 1rem solid lighten(grey, 30);
+      border-radius: 0.5rem;
+    }
+    subsection {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      // margin-top: 4rem;
+      // margin-bottom: 3rem;
+      width: auto;
+      margin-left: 5rem;
+      margin-right: 5rem;
+      // height: 0.5rem;
+      border-bottom: 0.25rem solid lighten(black, 50);
+    }
+  }
+}
+
+stats {
+  display: block;
+  transition: opacity 1s ease-out;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+.show {
+  opacity: 1;
+  height: auto;
+}
+
+.viewopts {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  align-items: center;
+}
+select[name='viewopts'],
+select[name='unitopts'] {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  background-color: $lightestSalmon;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='3rem' viewBox='0 0 24 24' width='3rem' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 50%;
+  border: none;
+  color: black;
+  width: auto;
+  height: auto;
+  font-size: 2rem;
+  padding: 1rem;
+  // border: none;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  // text-align-last: center;
+  padding-left: 3rem;
+  padding-right: 4rem;
+  // direction: ltr;
+  @include transition(all 0.2s ease-in);
+  &:focus > option:checked {
+    background: $select-background !important;
+  }
+  &:focus-visible {
+    outline: none;
+  }
+  &:hover {
+    background-color: darken($select-background, 2);
+    color: white;
+  }
+  option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: darken($primarySalmon, 5);
+    // border: none;
+    padding-right: 3rem;
+
+    // text-align: center;
+    @include transition(all 0.15s ease-in);
+    &:hover,
+    &.is-selected {
+      color: $select-background;
+      background: $select-color;
+    }
+    &[rel='hide'] {
+      display: none;
     }
   }
 }

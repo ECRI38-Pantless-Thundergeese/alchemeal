@@ -5,9 +5,11 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 0;
-  // padding: 1rem;
+  padding: 1rem;
+
   .logo {
-    height: 10vh;
+    height: 9vh;
+    transition: 500ms linear all;
     &:hover {
       rotate: 180deg;
       transition: 500ms linear all;
@@ -15,3 +17,17 @@
     }
   }
 }
+.flip {
+  // animation: rotation 2s infinite linear;
+  rotate: -180deg;
+  transition: 500ms linear all;
+}
+
+// @keyframes rotation {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(359deg);
+//   }
+// }
