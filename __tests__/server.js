@@ -18,18 +18,24 @@ describe('Server Route Testing', () => {
   beforeAll((done) => {
     server = app.listen(done);
   });
+
   afterAll((done) => {
     User.deleteOne({ username: 'test' }).catch((err) => {});
     User.deleteOne({ username: 'usertest' }).catch((err) => {});
     server.close(done);
   });
 
-  test('GET /', (done) => {
-    request(app)
-      .get('/')
-      .expect('Content-Type', /tet\/html/)
-      .expect(200);
-    done();
+  describe('GET /', (done) => {
+    it('responds with 200 status and text/html content type', () => {
+      request(app)
+        .get('/')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          return done();
+        });
+    });
   });
 
   test('POST /search', (done) => {
@@ -69,21 +75,13 @@ describe('Server Route Testing', () => {
     done();
   });
 
-  test('GET /signup', (done) => {
+  test('POST /signup', (done) => {
     request(app)
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({
-        username: 'test',
-        password: 'test',
-      })
-      .expect(200);
-    request(app)
-      .post('/signup')
-      .expect('Content-Type', /json/)
-      .send({
-        username: 'usertest',
-        password: 'test',
+        username: 'user-test',
+        password: 'password-test',
       })
       .expect(200);
     done();
@@ -94,27 +92,65 @@ describe('Server Route Testing', () => {
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({}) //empty body
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({ username: 'test' }) //no password field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({ password: 'test' }) //no username field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({ username: '', password: 'test' }) //empty username field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/signup')
       .expect('Content-Type', /json/)
       .send({ username: 'test', password: '' }) //empty password field
-      .expect(500);
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: '01234', password: '01234567' }) // length less than 6 in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({
+        username: '0123456789012345678901234567890',
+        password: '01234567',
+      }) // length more than 30 in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: '012345', password: '0123456' }) // length less than 8 in password field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 1, password: 'password-test' }) // number in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: ['username'], password: 'password-test' }) // object in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 'user-test', password: 1 }) // number in password field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 'user-test', password: ['password'] }) // object in password field
+      .expect(400);
     done();
   });
 
@@ -123,8 +159,8 @@ describe('Server Route Testing', () => {
       .post('/login')
       .expect('Content-Type', /json/)
       .send({
-        username: 'test',
-        password: 'test',
+        username: 'user-test',
+        password: 'password-test',
       })
       .expect(200);
     done();
@@ -135,27 +171,47 @@ describe('Server Route Testing', () => {
       .post('/login')
       .expect('Content-Type', /json/)
       .send({}) //empty body
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/login')
       .expect('Content-Type', /json/)
       .send({ username: 'test' }) //no password field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/login')
       .expect('Content-Type', /json/)
       .send({ password: 'test' }) //no username field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/login')
       .expect('Content-Type', /json/)
       .send({ username: '', password: 'test' }) //empty username field
-      .expect(500);
+      .expect(400);
     request(app)
       .post('/login')
       .expect('Content-Type', /json/)
       .send({ username: 'test', password: '' }) //empty password field
-      .expect(500);
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 1, password: 'password-test' }) // number in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: ['username'], password: 'password-test' }) // object in username field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 'user-test', password: 1 }) // number in password field
+      .expect(400);
+    request(app)
+      .post('/signup')
+      .expect('Content-Type', /json/)
+      .send({ username: 'user-test', password: ['password'] }) // object in password field
+      .expect(400);
     done();
   });
 
