@@ -16,4 +16,4 @@ npm run dev
 - Containerize
 - Deploy to AWS
 - Convert to TypeScript
-- Convert Redux logic to 
+- Convert Redux logic to ReactHooks/ ReactQuery
